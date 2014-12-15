@@ -45,6 +45,7 @@ class SError extends Error
 
 exports.SError = SError
 
+
 ### ###
 # DbError - generic database error's
 class DbError extends SError
@@ -52,6 +53,7 @@ class DbError extends SError
   name: 'DbError'
 
 exports.DbError = DbError
+
 
 ### ###
 # UnauthorizedError - generic unauthorized error's
@@ -61,6 +63,7 @@ class UnauthorizedError extends SError
 
 exports.UnauthorizedError = UnauthorizedError
 
+
 ### ###
 # PrivilagesError - generic privilages/access error's
 class PrivilagesError extends SError
@@ -68,3 +71,12 @@ class PrivilagesError extends SError
   name: 'PrivilagesError'
 
 exports.PrivilagesError = PrivilagesError
+
+
+### ###
+# NotFoundError - generic not found/no reousece error's
+class NotFoundError extends SError
+
+  name: 'NotFoundError'
+
+exports.NotFoundError = NotFoundError
