@@ -5,8 +5,6 @@ handleHttpErrors = (err, req, res, next) ->
   return next(err) unless err instanceof HttpError
   res.status(err.httpStatus).json err.json
 
-exports.handleHttpErrors = handleHttpErrors
-
 
 ### ###
 # HttpError - errors with http status
@@ -14,8 +12,6 @@ class HttpError
 
   constructor: (@httpStatus, @json) ->
     throw new Error('You must specify http status code') unless @httpStatus?
-
-exports.HttpError = HttpError
 
 
 ### ###
@@ -43,8 +39,6 @@ class SError extends Error
     @se_cause = err if err instanceof Error
     @se_cause
 
-exports.SError = SError
-
 
 ### ###
 # DbError - generic database error's
@@ -52,7 +46,8 @@ class DbError extends SError
 
   name: 'DbError'
 
-exports.DbError = DbError
+  toStringPublic: () ->
+    @message
 
 
 ### ###
@@ -61,7 +56,8 @@ class UnauthorizedError extends SError
 
   name: 'UnauthorizedError'
 
-exports.UnauthorizedError = UnauthorizedError
+  toStringPublic: () ->
+    @message
 
 
 ### ###
@@ -70,7 +66,8 @@ class PrivilagesError extends SError
 
   name: 'PrivilagesError'
 
-exports.PrivilagesError = PrivilagesError
+  toStringPublic: () ->
+    @message
 
 
 ### ###
@@ -79,4 +76,17 @@ class NotFoundError extends SError
 
   name: 'NotFoundError'
 
+  toStringPublic: () ->
+    @message
+
+
+### ###
+# EXPORTS
 exports.NotFoundError = NotFoundError
+exports.PrivilagesError = PrivilagesError
+exports.UnauthorizedError = UnauthorizedError
+exports.DbError = DbError
+exports.SError = SError
+
+exports.HttpError = HttpError
+exports.handleHttpErrors = handleHttpErrors
