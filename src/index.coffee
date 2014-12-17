@@ -23,17 +23,23 @@ class SError extends Error
   constructor: (@message, cause, @json) ->
     super
 
-    #Error.captureStackTrace this or @constructor
+    Error.captureStackTrace this or @constructor
     @cause cause if cause
 
     return
 
-  toString: () ->
+  toDebug: () ->
     str = (@hasOwnProperty('name') and @name or @constructor.name or @constructor::name)
     str += " - #{@message}" if @message
     str += " :: #{JSON.stringify(@json)}" if @json
-    str += " => Caused by: #{@se_cause.toString()}" if @se_cause and @se_cause.message
+    str += " => Caused by: #{@se_cause.toDebug()}" if @se_cause and @se_cause.message
     str
+
+  toString: () ->
+    @message
+
+  toJSON: () ->
+    @message
 
   cause: (err) ->
     @se_cause = err if err instanceof Error
@@ -46,18 +52,12 @@ class DbError extends SError
 
   name: 'DbError'
 
-  toStringPublic: () ->
-    @message
-
 
 ### ###
 # UnauthorizedError - generic unauthorized error's
 class UnauthorizedError extends SError
 
   name: 'UnauthorizedError'
-
-  toStringPublic: () ->
-    @message
 
 
 ### ###
@@ -66,18 +66,12 @@ class PrivilagesError extends SError
 
   name: 'PrivilagesError'
 
-  toStringPublic: () ->
-    @message
-
 
 ### ###
 # NotFoundError - generic not found/no reousece error's
 class NotFoundError extends SError
 
   name: 'NotFoundError'
-
-  toStringPublic: () ->
-    @message
 
 
 ### ###
