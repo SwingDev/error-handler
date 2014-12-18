@@ -17,7 +17,6 @@
     "handler"
   ],
   "dependencies": {
-    "extsprintf": "^1.2.1"
   },
   "devDependencies": {
     "coffeelint": "^1.6.1",
