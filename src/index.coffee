@@ -3,6 +3,7 @@
 handleHttpErrors = (err, req, res, next) ->
   return next() unless err?
   return next(err) unless err instanceof HttpError
+  return res.status(err.httpStatus).end() if err.json.message is ""
   res.status(err.httpStatus).json err.json
 
 
@@ -20,14 +21,18 @@ class SError extends Error
 
   name: 'SError'
 
-  constructor: (@message, cause, @json) ->
+  constructor: (message, cause, @json) ->
     super
-
     Error.captureStackTrace this or @constructor
-    @cause cause if cause
+    if typeof(message) is "string"
+      @message = message
+    else if message instanceof Error
+      @message = ""
+      @cause message
+    if cause
+      @cause cause
 
-    return
-
+ 
   toDebug: () ->
     str = (@hasOwnProperty('name') and @name or @constructor.name or @constructor::name)
     str += " - #{@message}" if @message
