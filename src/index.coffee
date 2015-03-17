@@ -21,6 +21,8 @@ class SError extends Error
 
   name: 'SError'
 
+  type: @name
+
   constructor: (message, cause, @json) ->
     super
     Error.captureStackTrace this or @constructor
@@ -32,7 +34,6 @@ class SError extends Error
     if cause
       @cause cause
 
- 
   toDebug: () ->
     str = (@hasOwnProperty('name') and @name or @constructor.name or @constructor::name)
     str += " - #{@message}" if @message
@@ -57,12 +58,16 @@ class DbError extends SError
 
   name: 'DbError'
 
+  type: @name
+
 
 ### ###
 # UnauthorizedError - generic unauthorized error's
 class UnauthorizedError extends SError
 
   name: 'UnauthorizedError'
+
+  type: @name
 
 
 ### ###
@@ -71,12 +76,16 @@ class PrivilagesError extends SError
 
   name: 'PrivilagesError'
 
+  type: @name
+
 
 ### ###
 # NotFoundError - generic not found/no reousece error's
 class NotFoundError extends SError
 
   name: 'NotFoundError'
+
+  type: @name
 
 
 ### ###
