@@ -58,16 +58,12 @@ class DbError extends SError
 
   name: 'DbError'
 
-  type: @name
-
 
 ### ###
 # UnauthorizedError - generic unauthorized error's
 class UnauthorizedError extends SError
 
   name: 'UnauthorizedError'
-
-  type: @name
 
 
 ### ###
@@ -76,16 +72,12 @@ class PrivilagesError extends SError
 
   name: 'PrivilagesError'
 
-  type: @name
-
 
 ### ###
 # NotFoundError - generic not found/no reousece error's
 class NotFoundError extends SError
 
   name: 'NotFoundError'
-
-  type: @name
 
 
 ### ###
